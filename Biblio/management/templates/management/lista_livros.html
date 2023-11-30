@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %} Biblio - Lista de Livros {% endblock %}
+
+{% block content %} 
+<h2>Lista de Livros</h2>
+    <ul>
+        {% for livro in livros %}
+            <li>
+                <strong>{{ livro.nome }}</strong> by {{ livro.autor }}<br>
+                {% if livro.foto %}
+                    <img src="{{ livro.foto.url }}" alt="{{ livro.nome }} Foto" style="max-width: 200px; max-height: 200px;">
+                {% else %}
+                    Nenhuma foto disponível
+                {% endif %}
+                <p><strong>Nota:</strong></p>
+                <p><strong>Avaliação:</strong></p>
+                <p><strong>Estoque:</strong> {{ livro.estoque }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'cadastrar-livro' %}">Add a new book</a>
+{% endblock %}

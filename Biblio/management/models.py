@@ -6,3 +6,6 @@ class ModelLivro(models.Model):
     autor = models.CharField(max_length=100)
     foto = models.ImageField(upload_to='capas_livro/', null=True, blank=True)
     estoque = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return self.nome
