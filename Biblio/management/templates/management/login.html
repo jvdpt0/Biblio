@@ -8,8 +8,8 @@
                 {% csrf_token %}
                 {{ form.as_p }}
                 <button type="submit" class="btn btn-primary">Login</button>
+                <a class="btn btn-secondary" href="{% url 'lista-livros' %}" class="btn btn-link mt-2">Voltar para lista de livros</a>
             </form>
-            <a href="{% url 'lista-livros' %}" class="btn btn-link mt-2">Voltar para lista de livros</a>
         </div>
     </div>
 {% endblock %}
