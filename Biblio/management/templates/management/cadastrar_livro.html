@@ -3,7 +3,7 @@
 {%block title %} Biblio - Cadastro de Livros {% endblock %}
 
 {% block content %}
-<form action="/management/" method="post" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form }}
     <button>Cadastrar</button>

@@ -3,21 +3,28 @@
 {% block title %} Biblio - Lista de Livros {% endblock %}
 
 {% block content %} 
-<h2>Lista de Livros</h2>
-    <ul>
+<h2 class="mt-4">Lista de Livros</h2>
+    <ul class="list-group mt-3">
         {% for livro in livros %}
-            <li>
-                <strong>{{ livro.nome }}</strong> by {{ livro.autor }}<br>
-                {% if livro.foto %}
-                    <img src="{{ livro.foto.url }}" alt="{{ livro.nome }} Foto" style="max-width: 200px; max-height: 200px;">
-                {% else %}
-                    Nenhuma foto disponível
-                {% endif %}
-                <p><strong>Nota:</strong></p>
-                <p><strong>Avaliação:</strong></p>
-                <p><strong>Estoque:</strong> {{ livro.estoque }}</p>
+            <li li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-9">
+                        <h4>{{ livro.nome }}</h4>
+                        <p class="mb-0">escrito por {{ livro.autor }}</p>
+                        <p class="mb-0"><strong>Nota:</strong>
+                        <p><strong>Avaliação:</strong></p>
+                        <p class="mb-0"><strong>Estoque:</strong> {{ livro.estoque }}</p>
+                    </div>
+                    <div class="col-md-3">
+                        {% if livro.foto %}
+                            <img src="{{ livro.foto.url }}" alt="{{ livro.nome }} Foto" class="img-fluid">
+                        {% else %}
+                            Nenhuma foto disponível
+                        {% endif %}
+                    </div>
+                </div>
             </li>
         {% endfor %}
     </ul>
-    <a href="{% url 'cadastrar-livro' %}">Add a new book</a>
+    <a href="{% url 'cadastrar-livro' %}">Adicionar um novo livro</a>
 {% endblock %}

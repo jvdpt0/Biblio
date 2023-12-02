@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <h2 class="mb-4">Login</h2>
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            <a href="{% url 'lista-livros' %}" class="btn btn-link mt-2">Voltar para lista de livros</a>
+        </div>
+    </div>
+{% endblock %}
