@@ -10,4 +10,5 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='management/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('registrar/', views.RegistrarView.as_view(template_name='management/registrar.html'), name='registrar'),
+    path('livros_favoritos', views.LivrosFavoritos.as_view(), name='livros_favoritos'),
 ]

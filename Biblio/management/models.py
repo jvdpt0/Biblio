@@ -33,3 +33,19 @@ class ModelAnalise(models.Model):
 
     def __str__(self):
         return f"Analise feita por {self.usuario.username} para {self.livro.nome}"
+    
+class ModelFavoritos(models.Model):
+    usuario = models.ForeignKey(ModelUsuario, on_delete=models.CASCADE)
+    livro = models.ForeignKey(ModelLivro, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.livro.nome} Favorito de: {self.usuario.username}"
+    
+class ModelAlugar(models.Model):
+    usuario = models.ForeignKey(ModelUsuario, on_delete=models.CASCADE)
+    livro = models.ForeignKey(ModelLivro, on_delete=models.CASCADE)
+    data_solicitado = models.DateTimeField(auto_now_add=True)
+    aprovado = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Livro {self.livro.nome} solicitado por {self.usuario.nome}"

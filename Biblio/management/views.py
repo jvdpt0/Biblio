@@ -4,7 +4,7 @@ from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import CreateView
 from django.contrib.auth import views as auth_views
 
-from .models import ModelLivro, ModelUsuario
+from .models import ModelLivro, ModelUsuario, ModelFavoritos
 from .forms import FormCriarUsuario
 
 
@@ -30,3 +30,11 @@ class RegistrarView(CreateView):
     template_name = 'management/registrar.html'
     form_class = FormCriarUsuario
     success_url = '/login/'
+
+class LivrosFavoritos(ListView):
+    model = ModelFavoritos
+    template_name = 'management/livros_favoritos.html'
+    context_object_name = 'livros_favoritos'
+
+    def get_queryset(self):
+        return ModelFavoritos.objects.filter(usuario=self.request.user)

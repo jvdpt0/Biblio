@@ -128,3 +128,5 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'management.ModelUsuario'
+
+LOGIN_REDIRECT_URL = '/lista_livros/'

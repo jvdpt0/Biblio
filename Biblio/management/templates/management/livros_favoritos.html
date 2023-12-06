@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2 class="mt-4">Os livros favoritos de {{ usuario.username }}</h2>
+    {% if livros_favoritos %}
+        <ul class="list-group mt-3">
+            {% for favorito in livros_favoritos %}
+                <li class="list-group-item">
+                    <h5 class="mb-0">{{ favorito.livro.nome }}</h5>
+                    <p class="mb-1">Escrito por: {{ favorito.livro.autor }}</p>
+                    <p class="mb-1"><strong>Nota:</strong></p>
+                    <p class="mb-1"><strong>Estoque:</strong> {{ favorito.livro.estoque }}</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">Página do Livro</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nenhum livro favorito no momento.</p>
+    {% endif %}
+{% endblock %}
