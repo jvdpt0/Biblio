@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2 class="mt-4">Os livros favoritos de {{ usuario.username }}</h2>
+    <h2 class="mt-4">Seus livros favoritos</h2>
     {% if livros_favoritos %}
         <ul class="list-group mt-3">
             {% for favorito in livros_favoritos %}

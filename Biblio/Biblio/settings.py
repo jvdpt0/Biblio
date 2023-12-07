@@ -129,4 +129,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'management.ModelUsuario'
 
-LOGIN_REDIRECT_URL = '/lista_livros/'
+LOGIN_URL = 'login/'
+LOGIN_REDIRECT_URL = '/lista-livros'
+LOGOUT_REDIRECT_URL = '/'
+
+MEDIA_ROOT = BASE_DIR / 'imagens'
+MEDIA_URL = '/arquivos/'

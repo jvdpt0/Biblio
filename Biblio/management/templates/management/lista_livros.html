@@ -9,15 +9,15 @@
             <li li class="list-group-item">
                 <div class="row">
                     <div class="col-md-9">
-                        <h4>{{ livro.nome }}</h4>
+                        <h4><a href="{% url 'livro-detalhado' pk=livro.id %}">{{ livro.nome }}</a></h4>
                         <p class="mb-0">escrito por {{ livro.autor }}</p>
-                        <p class="mb-0"><strong>Nota:</strong>
-                        <p><strong>Avaliação:</strong></p>
+                        <p class="mb-0"><strong>Nota: {{ livro.media_nota|default:"Nenhuma nota no momento" }}</strong></p>
+                        <p><strong>Acesse a página do livro para conferir as análises</strong></p>
                         <p class="mb-0"><strong>Estoque:</strong> {{ livro.estoque }}</p>
                     </div>
                     <div class="col-md-3">
                         {% if livro.foto %}
-                            <img src="{{ livro.foto.url }}" alt="{{ livro.nome }} Foto" class="img-fluid">
+                            <img src="{{ livro.foto.url }}" alt="Capa do livro{{ livro.nome }}" class="img-fluid" style="max-width:150px; height:auto;">
                         {% else %}
                             Nenhuma foto disponível
                         {% endif %}
@@ -26,5 +26,7 @@
             </li>
         {% endfor %}
     </ul>
+    {% if request.user.is_authenticated %}
     <a href="{% url 'cadastrar-livro' %}">Adicionar um novo livro</a>
+    {% endif %}
 {% endblock %}

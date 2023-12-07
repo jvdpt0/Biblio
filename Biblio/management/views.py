@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import CreateView
+from django.views.generic.detail import DetailView
 from django.contrib.auth import views as auth_views
 
-from .models import ModelLivro, ModelUsuario, ModelFavoritos
+
+from .models import ModelLivro, ModelUsuario, ModelFavoritos, ModelAnalise
 from .forms import FormCriarUsuario
 
 
@@ -31,10 +33,44 @@ class RegistrarView(CreateView):
     form_class = FormCriarUsuario
     success_url = '/login/'
 
-class LivrosFavoritos(ListView):
+class LivrosFavoritosView(ListView):
     model = ModelFavoritos
     template_name = 'management/livros_favoritos.html'
-    context_object_name = 'livros_favoritos'
+    context_object_name = 'favorito'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        livros_favoritos = ModelFavoritos.objects.filter(usuario=self.request.user)
+        context['livros_favoritos'] =livros_favoritos
+        return context
 
     def get_queryset(self):
         return ModelFavoritos.objects.filter(usuario=self.request.user)
+    
+class LivroDetalhadoView(DetailView):
+    model = ModelLivro
+    template_name = 'management/livro_detalhado.html'
+    context_object_name = 'livro'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        analises = ModelAnalise.objects.filter(livro=self.object)
+        context['analises'] = analises
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        livro_id = kwargs['pk']
+        livro = get_object_or_404(ModelLivro, pk=livro_id)
+        nota = request.POST.get('nota')
+        analise = request.POST.get('analise')
+
+        if nota and analise:
+            avaliacao = ModelAnalise(
+                usuario=request.user,
+                livro=livro,
+                analise=analise,
+                nota=nota,
+            )
+            avaliacao.save()
+
+        return redirect('livro-detalhado', pk=livro_id)
