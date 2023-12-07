@@ -2,15 +2,26 @@
 
 {% block content %}
     <h2 class="mt-4">Seus livros favoritos</h2>
-    {% if livros_favoritos %}
+    {% if favoritos %}
         <ul class="list-group mt-3">
-            {% for favorito in livros_favoritos %}
+            {% for favorito in favoritos %}
                 <li class="list-group-item">
-                    <h5 class="mb-0">{{ favorito.livro.nome }}</h5>
-                    <p class="mb-1">Escrito por: {{ favorito.livro.autor }}</p>
-                    <p class="mb-1"><strong>Nota:</strong></p>
-                    <p class="mb-1"><strong>Estoque:</strong> {{ favorito.livro.estoque }}</p>
-                    <a href="#" class="btn btn-outline-primary btn-sm">Página do Livro</a>
+                    <div class="row">
+                        <div class="col-md-9">
+                            <h5 class="mb-0">{{ favorito.nome }}</h5>
+                            <p class="mb-1">Escrito por: {{ favorito.autor }}</p>
+                            <p class="mb-1"><strong>Nota: {{ favorito.media_nota|default:"Nenhuma nota no momento" }}</strong></p>
+                            <p class="mb-1"><strong>Estoque:</strong> {{ favorito.estoque }}</p>
+                            <a href="{% url 'livro-detalhado' pk=favorito.id %}" class="btn btn-outline-primary btn-sm">Página do Livro</a>
+                        </div>
+                        <div class="col-md-3">
+                            {% if favorito.foto %}
+                            <img src="{{ favorito.foto.url }}" alt="Capa do livro{{ favorito.nome }}" class="img-fluid" style="max-width:150px; height:auto;">
+                            {% else %}
+                            Nenhuma foto disponível
+                            {% endif %}
+                        </div>
+                    </div>
                 </li>
             {% endfor %}
         </ul>

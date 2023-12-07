@@ -34,18 +34,12 @@ class RegistrarView(CreateView):
     success_url = '/login/'
 
 class LivrosFavoritosView(ListView):
-    model = ModelFavoritos
+    model = ModelLivro
     template_name = 'management/livros_favoritos.html'
-    context_object_name = 'favorito'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        livros_favoritos = ModelFavoritos.objects.filter(usuario=self.request.user)
-        context['livros_favoritos'] =livros_favoritos
-        return context
+    context_object_name = 'favoritos'
 
     def get_queryset(self):
-        return ModelFavoritos.objects.filter(usuario=self.request.user)
+        return self.request.user.favoritos.all()
     
 class LivroDetalhadoView(DetailView):
     model = ModelLivro
@@ -74,3 +68,17 @@ class LivroDetalhadoView(DetailView):
             avaliacao.save()
 
         return redirect('livro-detalhado', pk=livro_id)
+    
+class AdicionarRemoverFavorito(View):
+    def post(self, request, *args, **kwargs):
+        livro_id = kwargs['pk']
+        livro = get_object_or_404(ModelLivro, pk=livro_id)
+        usuario = request.user
+
+        if usuario.favoritos.filter(id=livro_id).exists():
+            usuario.favoritos.remove(livro)
+        else:
+            usuario.favoritos.add(livro)
+        
+        return redirect('livro-detalhado', pk=livro_id)
+            
